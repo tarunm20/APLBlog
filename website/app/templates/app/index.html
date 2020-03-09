@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Blog</title>
+    <style>
+        .nav-bar {
+            list-style-type: none; 
+            margin: 0;
+            padding: 0; 
+            overflow: hidden; 
+            background-color: #ffa45c;
+            position: fixed; 
+            top: 0;
+            width: 100%;
+            position: fixed;
+        }
+        .nav-bar-cell {
+            float: left; 
+            display: block; 
+            text-align: center;
+            padding: 10px;
+        }
+        .titles {
+            position: fixed;
+            right: 75px;
+            font-size: 20px;
+            color: #edf5e1;
+            background-color: #ffa45c;
+            border-radius: 25px;
+            text-align: center; 
+            padding: 20px;
+        }
+        .posts {
+            margin-top: 150px;
+            display: block;
+            text-align: center;
+            width: 80%;
+            color: #5d5d5a;
+            font-family: monospace;
+            float: center;
+            margin-left: 150px;
+        }
+        #post-table {
+            float: left; 
+            width: 80%; 
+            right: 150px;
+        }
+        #post-cell {
+            background-color: #ffa45c; 
+            border-radius: 25px; 
+            border-collapse: separate; 
+            border-spacing: 0 20px;
+        }
+        #body-animation {
+            width: 50px;
+            height: 50px;
+            background-color: pink;
+            position: fixed;
+            animation-name: animation;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes animation {
+            0% {background-color: pink; left: 10px; top: 200px;}
+            25% {background-color: violet; left: 50px; top: 200px;}
+            50% {background-color: magenta; left: 50px; top: 300px;}
+            75% {background-color: hotpink; left: 10px; top: 300px;}
+            100% {background-color: pink; left: 10px; top: 200px;}
+        }
+        body {
+            background-color: #fff4e3
+/*             
+            #ffa45c
+            #ffcdab */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- NAV-BAR -->
+        <ul class = "nav-bar">
+            <div style = "right: 20px;">
+                <li class = "nav-bar-cell">
+                    <a href = "/" style = "color: #05386b;">Home</a>
+                </li>
+                <li class = "nav-bar-cell">
+                    <a href = "/" style = "color: #05386b;">About</a>
+                </li>
+                <li class = "nav-bar-cell">
+                    <a href = "/signup" style = "color: #05386b;">Sign Up</a>
+                </li>
+            </div>
+            <div style = "float: right;">
+                <li class = "nav-bar-cell">
+                    <form method = "post">
+                        {% csrf_token %}
+                        Username:{{ form.username }}
+                    </form>
+                </li>
+                <li class = "nav-bar-cell">
+                    <form method = "post">
+                        {% csrf_token %}
+                        Password:{{ form.password }}
+                    </form>
+                </li>
+                <li class = "nav-bar-cell">
+                    <button type = 'submit'>Submit</button>
+                </li>
+            </div>
+        </ul>
+    </div>
+    {% if posts %}
+        <!-- THE POSTS SECTION -->
+        <div class = "posts">
+            <table id = "post-table">
+                {% for post in posts %}
+                    <div>
+                        <tr>
+                            <center>
+                                <div>
+                                    <td id = "post-cell">
+                                        <div style = "padding: 20px;" >
+                                            <a href = "{{post.id}}"><h2>{{post.title}}</h2></a>
+                                            <p>{{post.content}}</p>
+                                        </div>
+                                    </td>
+                                </div>
+                            </center>
+                        </tr>
+                    </div>
+                {% endfor %}
+            </table>
+        </div>
+        <!-- THE TITLES SECTION -->
+        <div class = "titles">
+            <table style = "margin-left: auto; margin-right: auto; border-spacing:20px;">
+                <div>
+                    <tr>
+                        <th> Recent Posts</th>
+                    </tr>
+                    {% for post in posts %}
+                        <tr>
+                            <td>
+                                <a href = "{{post.id}}">{{post.title}}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </div>
+            </table>
+        </div>
+    {% else %}
+        <p>There are not posts currently</p>
+    {% endif %}
+</body>
+</html>

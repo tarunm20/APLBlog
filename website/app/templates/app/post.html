@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Blog Post</title>
+    </head>
+    <body>
+        <div class = "container">
+            {% if post %}
+                <a href = '/'>
+                    <h3> Home </h3>
+                </a>
+                <center>
+                    <a href = '{{post.id}}'>
+                        <h2>{{post.title}}</h2>
+                    </a>
+                    <p style = "width: 55%; display: inline-block;">{{post.content}}</p>
+                </center>
+            {% else %}
+                <p>This post does not exist</p>
+            {% endif %}
+        </div>
+    </body>
+    </html>
